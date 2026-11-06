@@ -1,0 +1,50 @@
+
+#Create virtual env: 
+python -m venv .venv
+
+#Activate virtual env:
+.venv\Scripts\activate
+
+#Deactive virtual env: 
+deactive
+
+#Create requirements file with libraries: 
+pip freeze > requirements.txt
+
+#install fastapi
+pip install "fastapi[standard]"
+
+#run application
+uvicorn main:app --reload #but now treat operational as module and run uvicorn operational.main:app --reload
+
+#install libraries to connect to mysql database
+pip install sqlalchemy pymysql
+
+#install pytest
+pip install pytest
+
+#to run tests
+python -m pytest
+
+#install passlib for cryptcontext
+pip install passlib[bcrypt]
+
+
+#the previous install installed bcrypt 5.0, which gave me an error hashing the password, so re install a lower version
+python -m pip uninstall bcrypt
+python -m pip install "bcrypt==4.3.0"
+
+#install jwt for the tokens
+python -m pip install PyJWT
+
+#use the following code to generate a secret key once
+import secrets 
+
+secret_key = secrets.token_urlsafe(32)
+print(secret_key)
+
+#since microsoft blocked my uvicorn, use this: 
+python -m uvicorn operational.main:app --reload
+
+#generate new key, from backend run the following to generate first admin, then delete the file
+python -m operational.generate_first_admin.py 
